@@ -1,0 +1,539 @@
+## fonction allowing to set up the game
+def setup_game(possible_answers, female_charactere, male_charactere,choice_list,again):
+    
+        print("""\n Hum, tough morning.... last night was fun but wait... 
+              you don't remember anything... what happened to you? \n\n""")
+
+    ## retreiving user info     
+        charactere_name = input("What's your name? \n\n")
+        charactere_sex = input("What's sex are you? Male? Female? \n \n")
+        charactere_age = input("How old are you? \n \n")
+
+
+    ## add user inputs to specific list to personalize output text  
+        if charactere_sex in possible_answers:
+            female_charactere.append(charactere_name)
+            female_charactere.append(charactere_age)
+            charactere_attributes=female_charactere
+        else:
+            male_charactere.append(charactere_name)
+            male_charactere.append(charactere_age)
+            charactere_attributes=male_charactere
+
+        init_trigger(possible_answers, charactere_attributes, choice_list,again)    
+        return charactere_attributes
+
+    
+
+    ## decision 1
+def init_trigger(possible_answers, charactere_attributes, choice_list,again):
+    
+        input('<Press any key to continue>\n')
+        print(f"""Why are you sleeping with a hairy {charactere_attributes[0]}? 
+        Come on {charactere_attributes[6]}, try to remember!\n""")
+
+        print (67 * "-")
+
+        choice_list.append(1) ##element created in list to reaccess with possible choice function
+        phone_call = input("""Suddently your phone ring, it's your mom. Why does she call you? 
+        1)Answer 
+        2)Not Answer
+        <Enter answer or 1>\n""")   ## collect user input 
+
+    ## compare user input with accepted answers
+        if phone_call in possible_answers:
+            print(f"""Hi {charactere_attributes[6]}, I am wondering if you will come to eat later for lunch\n""")
+            again=0
+            print (67 * "-")
+            mom(possible_answers, charactere_attributes,choice_list,again) ## user move to its second decision
+
+        else:
+            print("""No way! You are totally hangover and hearing your mom on the morning will only make your head more painful.\n""")
+            print (67 * "-")
+            wake_up(possible_answers, charactere_attributes,choice_list,again) ## user move to its second decision
+
+
+        ## decision 2
+def mom(possible_answers,charactere_attributes, choice_list,again): 
+        choice_list.append(2)
+        input('<Press any key to continue>\n')
+
+        flowers= input(f"""Seriously? {charactere_attributes[7]} years old and she still take care of you like you are 4? Will you go? 
+        What's your mom favorite flower? 
+        <Enter a name>\n""")
+        name=find_my_name(flowers) ##find if odd or not
+
+        if name == "pair": ##compare return to condition
+            print(f"""Such a good kid! Lets skip the lunch but go to the flower shop to get some to her to apologies. \n""")
+            print (67 * "-")
+            bus(charactere_attributes,choice_list,again) ## user move to its third decision
+
+        elif name=="impair": ##compare return to condition
+            print(f"""Come on she is your mom! at least you could try to remember! Well, lets go, you are already late.\n""")
+            print (67 * "-")
+            bus_mom(charactere_attributes,choice_list,again)## user move to its third decision
+
+        else: ##compare return to condition
+            print(f"""No one knows that! lets avoid this boring dinner and lets find out what happen last night.\n""") 
+            print (67 * "-")
+            favorite_meal(charactere_attributes,choice_list,again)## user move to its third decision
+
+
+
+        ## decision 2
+def wake_up(possible_answers, charactere_attributes,choice_list,again):
+        input('<Press any key to continue>\n')
+
+        choice_list.append(7)
+        go_to= input(f"""Unfortunaly, the phone vibration made too much noise and your beautifull gorilla just wake up. What do you do? 
+        1) Leave 
+        2) Stay\n""")
+
+        if go_to in possible_answers: ##compare return to condition
+            print(f""" Good idea, lets avoid this {charactere_attributes[0]}. Now lets see your best friend. Maybe he knows what happened last night.\n""")
+            print (67 * "-")
+            leave(possible_answers,charactere_attributes,choice_list,again)
+
+        else: ##compare return to condition
+            print (67 * "-")
+            stay(possible_answers, charactere_attributes,choice_list,again)
+
+
+
+        ## decision 3
+def bus_mom(charactere_attributes,choice_list, again):
+
+    ## allow user to go back to its previous choice
+        if again<1:
+            possible_choice(choice_list, possible_answers, charactere_attributes, again, guess, name)
+            again=again+1
+
+        choice_list.append(3)
+        input('<Press any key to continue>\n')
+        time= int(input("""You take your keys and your phone, and you leave your place. The sleeping monster will find its own way out of your appartment. 
+        Should you take the bus or should you walk? 
+         <Enter a number between 1 and 10>\n""")) 
+
+        if time==3: ##compare return to condition
+            print("""Today, is your day! you arrived just on time to take the bus! No need to walk!\n""")
+            print (67 * "-")
+            favorite_meal(charactere_attributes,choice_list,again) ## user move to its fourth decision
+
+        elif time>3: ##compare return to condition
+            print("""Welcome to France, where strikes are part of the culture. You leave too far away for your mom place. 
+            I guess you can only go back home\n""")
+            print (67 * "-")
+            stay(charactere_attributes,choice_list,again) ## user move to its fourth decision
+
+        else:##compare return to condition
+            print("""And.... You missed the bus, You are good to walk.. at least, you will still get on time to eat!\n""")
+            print (67 * "-")
+            favorite_meal(charactere_attributes,choice_list,again)## user move to its fourth decision
+
+
+
+        ## decision 3
+def leave(possible_answers,charactere_attributes,choice_list,again):
+        input('<Press any key to continue>\n')
+
+    ## allow user to go back to its previous choice
+        if again<1:
+            guess=0
+            name=0
+            possible_choice(choice_list, possible_answers, charactere_attributes, again, guess, name)
+            again=again+1
+
+
+        choice_list.append(9)
+        guess=int(input(f"""You go out of your place, close the door and.... 
+        Did you take the keys?
+         <Enter a number between 1 and 10>\n"""))
+
+        if guess== 3: ##compare return to condition
+            scnd_charactere_name=input(f"""Lucky {charactere_attributes[1]}! You were close to go knock on the door so she would open it. But wait did you take your phone ? 
+            Whats your friend name?
+            <Enter a name>\n""")
+            name= find_my_name(scnd_charactere_name)
+
+        elif guess>3: ##compare return to condition
+            scnd_charactere_name=input(f"""No way, you forgot! Well lucky are you, your mom has a set. But wait, did you take your phone so you can at leat call her later today? 
+            What your mom name?
+            <Enter a name>\n""")
+            name= find_my_name(scnd_charactere_name)
+
+        else: ##compare return to condition
+            scnd_charactere_name=input(f"""No way, you forgot! And you did not gave your mom a set. But wait did you take your phone so you can at least call the locksmith?
+            What brand is your phone?
+            <Enter a name>\n""")
+            name= find_my_name(scnd_charactere_name)
+
+        print (67 * "-")
+        combo_phone_key(guess, name,charactere_attributes,choice_list,again)
+
+
+
+        ## decision 3
+def stay(possible_answers, charactere_attributes,choice_list,again):
+        input('<Press any key to continue>\n')
+
+    ## allow user to go back to its previous choice
+        if again<2:
+            guess=0
+            name=0
+            possible_choice(choice_list, possible_answers, charactere_attributes, again, guess, name)
+            again=again+1
+
+        choice_list.append(8)
+        guess= int(input(f"""You like risk and actually she mights not be that bad who knows? 
+        <Enter a number between 1 and 10>\n"""))
+
+        if guess== 3: ##compare return to condition
+            monster_name=input(f"""Lucky {charactere_attributes[1]}! {charactere_attributes[2]} slepts with a costume and has {charactere_attributes[2]} removes it {charactere_attributes[2]} looks amazing! It might be your chance! Ok, you don't remember but {charactere_attributes[2]} might be the love of your life. 
+            What's {charactere_attributes[3]} name?
+            <Enter a name>\n""")
+            name=find_my_name(monster_name)
+
+        elif guess>3: ##compare return to condition
+            monster_name=input(f"""Why did you stay? Seriously what did you expect, {charactere_attributes[6]}? Maybe that would be nice to remember {charactere_attributes[4]} name to ask {charactere_attributes[5]} to leave?
+            <Enter a name>\n""")
+            name=find_my_name(monster_name)
+
+        else: ##compare return to condition
+            monster_name=input(f"""Lucky {charactere_attributes[1]}! {charactere_attributes[2]} slepts with a costume and has {charactere_attributes[2]} removes it {charactere_attributes[2]} looks amazing! Unfortunatly {charactere_attributes[2]} does not seam to think the same about you. 
+            Maybe that would be nice to remember {charactere_attributes[3]} name?
+            <Enter a name>\n""")
+            name=find_my_name(monster_name)
+
+        print (67 * "-")
+        combo_love(guess, name,charactere_attributes,choice_list)
+
+        
+
+        ## decision 3
+def favorite_meal(charactere_attributes,choice_list,again):
+
+    ## allow user to go back to its previous choice
+        if again<1:
+            possible_choice(choice_list)
+            again=again+1
+
+        choice_list.append(4)
+        lunch=input(f"""You finally arrived, time to eat. Unfortunatly you still have no idea about what happen last night. If you mom cooked your favorite dish than for sure you will not see your best friend and know what happen to you. Let see if she did, what's you favorite meal?\n""")
+        name=len(lunch) ##count number of letter in the input
+        if name<8: ##compare result with condition
+            print(f"""Even if you are a good kid, she still not really car about you taste. At least you are done eating quickly. It is time to find out what happen last night!\n""")
+            print (67 * "-")
+            bus(charactere_attributes,again)
+
+        else:##compare result with condition
+            print(f"""Of course she did it, otherwise you would not be her favorite kid. Well it is not today that you will find out what happen...\n""")
+            print (67 * "-")
+            play_dice(charactere_attributes,again)
+
+        
+
+        ## decision 4
+def combo_phone_key(guess, name,charactere_attributes,choice_list,again):
+
+        choice_list.append(11)
+        if (guess== 3 and name=='impair') or (guess< 3 and name=='impair') : ##compare return to condition
+            print(f"""It's your lucky day! Maybe should you play at the loto today! Now lets go see your friend.\n""")
+            input('<Press to find out your future>\n')
+            bus(charactere_attributes,choice_list,again)
+
+        elif (guess> 3 and name=='pair') or (guess== 3 and name=='pair'): ##compare return to condition
+            print("""Ok, at least you have your phone, thats could be worst seriously. Let's now see your friends.\n """)
+            input('<Press to find out your future>\n')
+            bus(charactere_attributes,choice_list,again)
+
+        else: ##compare return to condition
+            print(f"""You did everything you could to avoid {charactere_attributes[4]}, you were close to succeed but nop... Lets knock on the door.\n""")
+            input('<Press to find out your future>\n')
+            stay(charactere_attributes,choice_list,again)
+        
+        
+
+        ## decision 4
+def combo_love(guess, name,charactere_attributes,choice_list):
+        choice_list.append(10)
+        if (guess== 3 and name=='impair') or (guess< 3 and name=='impair') : ##compare return to condition
+            print(f"""Congratulation, even if at that point you still have no idea about last night, at least you find a {charactere_attributes[0]}! 
+            Your friend are going to be jalous and thats the most important. \n""")
+            print (67 * "-")
+            input('<Press to find out your future>\n')
+            end=1 ##set up correct end
+            end_story(end, charactere_attributes, choice_list)
+
+        elif (guess> 3 and name=='pair') or (guess== 3 and name=='pair'): ##compare return to condition
+            print("""And thats how you end up your life single. You just missed the best love story of your life.\n  """)
+            print (67 * "-")
+            input('<Press to find out your future>\n')
+            end=2  ##set up correct end
+            end_story(end, charactere_attributes, choice_list)
+
+        else: ##compare return to condition
+            print("""At least you were polite your mom would say that you are a nice person. 
+            Maybe would be nice to never know remember anything about last night to avoid troubles.\n """)
+            print (67 * "-")
+            input('<Press to find out your future>\n')
+            end=2  ##set up correct end
+            end_story(end, charactere_attributes, choice_list)
+    
+
+    ## decision 4
+def play_dice(charactere_attributes,choice_list,again):
+        choice_list.append(5)
+        print ("She was so nice! She now want to play a little game, will you play? lets roll the dice!\n ")
+        result=dice_game()
+        if result>18: ##compare return to condition
+            print("Hum, no you are good, you don't want to play lets intead find out!\n ")
+            print (67 * "-")
+            bus(charactere_attributes,again)
+        else:##compare return to condition
+            print(f"Hum no, you don't really care. You really are the perfect kid who loves {charactere_attributes[3]} mom! \n")
+            print (67 * "-")
+            end=2
+            end_story(end, charactere_attributes)
+
+
+        ## decision 4 or 5
+def bus(charactere_attributes,choice_list,again):
+        choice_list.append(6)
+        input('<Press any key to continue>\n')
+        chances=3
+        i=0
+        wait=0
+        index=[0,1]
+        while (wait!=12):
+            wait=int(input(f"""Lets take the bus. How long are we going to wait? 
+            You have {chances} chances
+            <enter a number between 0 and 15> \n"""))
+            if wait==12:##compare return to condition
+                print("""Congratulation! Finally you are going to know what happen!\n""")
+                print (67 * "-")
+                end=1
+                end_story(end, charactere_attributes, choice_list)
+                break
+            elif wait>10: ##compare return to condition
+                print("""Welcome to France, where strikes are part of the culture. You leave too far away for your friends place. I guess you can only go back home. Hopefully the girls is not here anymore.\n""")
+                print (67 * "-")
+                stay(charactere_attributes,choice_list,again)
+                break
+            else:##compare return to condition
+                if i in index:
+                    i=board_is_dead(i)
+                    chances=chances-1
+                    i=i+1
+
+                else:
+                    i=board_is_dead(i)
+                    print(""" Unfortunalety, you have been waiting for long and the night is comming, you are going back home\n""")
+                    print (67 * "-")
+                    end=3
+                    end_story(end, charactere_attributes, choice_list)
+                    break
+                
+ 
+    ## How stories end      
+def end_story(end, charactere_attributes, choice_list):
+        if end==1: ##compare return to condition, give the matching end before menu
+            print(f"""This {charactere_attributes[0]} was for sure really cute, unfortunately, {charactere_attributes[2]} will break you heart few month later when you will find out that {charactere_attributes[2]} actually have someone and is engaged.\n""")
+            print (67 * "-")
+            input('<Press any key to go back to the menu>\n')
+            again=2
+            choice_list.append(charactere_attributes)
+            main(True,choice_list)
+            return again
+
+
+        elif end==2: ##compare return to condition, give the matching end before menu
+            print(f"""You decided to forget last night. You will meet a {charactere_attributes[0]} 5 years later that will have everything you want from a {charactere_attributes[0]}. Unfortunatly you mom will not like {charactere_attributes[4]} and you wll end up you life alone with a Cavalier king Charles as a companions. 
+    END\n""")
+            print (67 * "-")
+            input('<Press any key to go back to the menu>\n')
+            again=2
+            choice_list.append(charactere_attributes)
+            main(True,choice_list)
+            return again
+
+
+        else: ##compare return to condition, give the matching end before menu
+            print(f""" Your firend will be so pissed that he will never tell you who was this person on your bed. 
+    Your mom will hate you and will never invite you home again. You will finish your life alone with a cat named May.
+    """)
+            print (67 * "-")
+            input('<Press any key to go back to the menu>\n')
+            again=2
+            choice_list.append(charactere_attributes)
+            main(True,choice_list)
+            return again
+
+def board_is_dead(i):
+        print("""The board is dead... You can only wait\n""") 
+        j=0
+        while i!=3:
+            while j!=6:
+                input('<Press enter to wait>\n')
+                j=j+1
+            break
+        return i
+
+    ## fonction reproducing a dice game
+def dice_game():
+        from random import randint
+        repeat = True
+        result=0
+        while repeat!=4:
+            a=randint(1,6)
+            print("You rolled",a)
+            repeat=repeat+1
+            result=result+a
+        return result
+
+    
+    ##fonction comparing a string to know if odd or even number of letter
+def find_my_name(name):
+        if len(name) % 2== 0: ##count number of charactere in text and return if odd or not
+            PorI='pair'
+        else:
+            PorI='impair'
+        return PorI
+           
+    
+    
+    ## fonction allowing to access defferent steps    
+def possible_choice(choice_list, possible_answers, charactere_attributes, again, guess, name):
+    
+        happy_flow=input(f"""Would you like to go back to your previous choice? 
+        1)YES! 2)NO \n""")
+
+        if happy_flow in possible_answers:  ##compare return to condition
+            for x in choice_list:  ##run for to read list and reach last decision the user took
+                if choice_list[-1]==1: ## look at list with condition to give the correct fonction
+                    choice_list.pop() ##delete last element of the list to rewrite the story
+                    init_trigger(possible_answers, charactere_attributes, choice_list,again) ## redirect to the correct decision
+                    main(True,choice_list)
+                    break
+
+                elif choice_list[-1]==2:
+                    choice_list.pop()
+                    mom(possible_answers,charactere_attributes,choice_list,again)
+                    main(True,choice_list)
+                    break
+
+                elif choice_list[-1]==3:
+                    choice_list.pop()
+                    bus_mom(charactere_attributes,choice_list,again)
+                    main(True,choice_list)
+                    break
+
+                elif choice_list[-1]==4:
+                    choice_list.pop()
+                    favorite_meal(charactere_attributes,choice_list,again)
+                    main(True,choice_list)
+                    break
+
+                elif choice_list[-1]==5:
+                    choice_list.pop()
+                    play_dice(charactere_attributes,choice_list,again)
+                    main(True,choice_list)
+                    break
+
+                elif choice_list[-1]==6:
+                    choice_list.pop()
+                    bus(charactere_attributes,choice_list,again)
+                    main(True,choice_list)
+                    break
+
+                elif choice_list[-1]==7:
+                    choice_list.pop()
+                    wake_up(possible_answers, charactere_attributes,choice_list,again)
+                    main(True,choice_list)
+                    break
+
+                elif choice_list[-1]==8:
+                    choice_list.pop()
+                    again=2
+                    stay(possible_answers,charactere_attributes,choice_list,again)
+                    main(True,choice_list)
+                    break
+
+                elif choice_list[-1]==9:
+                    choice_list.pop()
+                    again=2
+                    leave(possible_answers,charactere_attributes,choice_list,again)
+                    main(True,choice_list)
+                    break
+
+                elif choice_list[-1]==10:
+                    choice_list.pop()
+                    combo_love(guess, name,charactere_attributes,choice_list)
+                    main(True,choice_list)
+                    break
+
+                else:
+                    choice_list.pop()
+                    combo_phone_key(guess, name,charactere_attributes,choice_list)
+                    main(True,choice_list)
+                    break
+
+        else:
+            if again==10:
+                again=1
+                main(True,choice_list)
+
+    
+    
+    ## desplay menu      
+def menu():  
+        print (30 * "-" , "MENU" , 30 * "-")
+        print ("1. Play")
+        print ("2. Back to my last choice")
+        print ("3. Exit")
+        print (67 * "-")
+
+
+    ##fonction launching the game
+def main(already_play,choice_list): 
+    
+        play=0
+        again=0
+        possible_answers= ["female","Female","F","f","girl","Girl","answer","Answer","a","yes","y","Yes","Y","kitchen","Kitchen","K","k","1","Leave","leave","l"]
+        female_charactere= ["boy","girl","he","his","him","prince"]
+        male_charactere= ["girl","boy","she","her","her","princess"]
+        charactere_attributes=[]
+        guess=0
+        name=0
+        end=0
+
+        loop=True      
+
+        while loop:   ## While loop which will keep going until loop = False
+            menu()    ## Displays menu
+            choice = int(input("Enter your choice [1-3]: "))
+
+            if choice==1:  ## allow user to start the game    
+                print ("Your story is about to start")
+                charactere_attributes= setup_game(possible_answers, female_charactere, male_charactere, choice_list,again)
+
+            elif choice==2: ## allow user to start the game at its previous choice
+                if already_play:
+                    again=10
+                    charactere_attributes=choice_list[-1]
+                    choice_list.pop(-1)
+                    choice_list.pop(-1)
+                    possible_choice(choice_list, possible_answers, charactere_attributes, again, guess, name)
+                    break
+
+                else: ## verify that the user has at least play once.
+                    print ("You have not played yet, you are starting a new story")
+                    charactere_attributes=setup_game(possible_answers, female_charactere, male_charactere, choice_list,again) 
+
+            else: ## allow user to exit the game
+                print("Thank you for playing!")
+                loop=False # This will make the while loop to end as not value of loop is set to False
+
+    
+    
+    ## execute all the code  
+main(False,[])
